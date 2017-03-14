@@ -72,7 +72,7 @@ INSTALLED_APPS = (
     'require',
     'rest_framework',
     'taggit',
-
+    'compressor',
 
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
