@@ -1,0 +1,22 @@
+{% load staticfiles cms_tags %}
+<div class="row header">
+	<div class="large-3 columns">
+		<div class="logo">
+			{# Not using // here as kcl.ac.uk's https cert is broken. #}
+      <a href="http://www.kcl.ac.uk/" title="King's College London">
+        <img src="{% static 'images/kings-logo-red.svg' %}" alt="King's College London">
+      </a>
+    </div>
+	</div>
+
+	<div class="large-9 columns">
+    <nav>
+      {% block main_menu %}
+      {% get_site_root as site_root %}
+      {% main_menu root=site_root current_page=self %}
+      {% endblock %}
+    </nav>
+
+  </div>
+
+</div>

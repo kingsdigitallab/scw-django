@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{ self.title }}{% endblock %}
+{% block title %}
+<header><h2>{{ self.title }}</h2></header>
+{% endblock %}
+
+{% block main %}
+{% include "cms/includes/streamfield.html" with blocks=self.body %}
+{% endblock %}
