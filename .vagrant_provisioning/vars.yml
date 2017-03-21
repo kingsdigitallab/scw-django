@@ -1,6 +1,6 @@
 app: {name: scw}
 postgresql: {admin_user: postgres, cluster_name: main, cluster_reset: false, default_auth_method: trust,
-  encoding: UTF-8, initial_data_file: data.sql, locale: en_GB.UTF-8, user: scw,
+  encoding: UTF-8, initial_data_file: scw.sql, locale: en_GB.UTF-8, user: scw,
   version: 9.1}
 project_root: /vagrant
 python: {requirements: requirements-vagrant.txt, virtualenv_location: /home/vagrant/venv}

@@ -36,6 +36,7 @@
     apt_key:
       url: https://packages.elastic.co/GPG-KEY-elasticsearch
       state: present
+      validate_certs: no
     tags:
       - system
 
@@ -260,6 +261,9 @@
       chdir: "{{ project_root }}"
     tags:
       - git
+
+  - name: git | remove existing pre-commit hook
+    command: "rm -rf /vagrant/.git/hooks/pre-commit"
 
   - name: git | flake8 pre-commit hook
     command: "{{ user_home }}/venv/bin/flake8 --install-hook=git"
