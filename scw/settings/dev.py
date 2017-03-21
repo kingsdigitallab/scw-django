@@ -10,7 +10,7 @@ DATABASES = {
         'NAME': 'app_scw_dev',
         'USER': 'app_scw',
         'PASSWORD': '',
-        'HOST': ''
+        'HOST': 'dbgis-dev.scw.cch.kcl.ac.uk'
     },
 }
 

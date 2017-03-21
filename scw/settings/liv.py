@@ -12,7 +12,7 @@ DATABASES = {
         'NAME': 'app_scw_liv',
         'USER': 'app_scw',
         'PASSWORD': '',
-        'HOST': ''
+        'HOST': 'dbgis-liv.scw.cch.kcl.ac.uk'
     },
 }
 
