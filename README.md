@@ -32,3 +32,11 @@ Once you are SSH'd into the VM, you can run the server by issuing:
 You can log into the django admin [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 or wagtail admin [http://127.0.0.1:8000/wagtail](http://127.0.0.1:8000/wagtail) pages
 using the username `vagrant` and password `vagrant`.
+
+## Management Scripts
+NM import scripts should be run in the following order:
+* `import_countries`
+* `import_years`
+* `import_events`
+They should only be run *once* - they are designed for initial import of data into
+a clean database only.
