@@ -93,7 +93,7 @@ INSTALLED_APPS += (
     # your project apps here
     'cms',
     'visualisation',
-
+    'drivingevents',
 )
 
 INTERNAL_IPS = ('127.0.0.1', )
