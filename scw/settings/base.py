@@ -7,7 +7,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 For production settings see
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 """
-# from ddhldap.settings import *
+from ddhldap.settings import * # noqa
 
 import os
 
@@ -139,11 +139,11 @@ LOGGING = {
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        # 'django_auth_ldap': {
-        #     'handlers': ['file'],
-        #     'level': LOGGING_LEVEL,
-        #     'propagate': True
-        # },
+        'django_auth_ldap': {
+            'handlers': ['file'],
+            'level': LOGGING_LEVEL,
+            'propagate': True
+        },
         'scw': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
@@ -212,8 +212,13 @@ WSGI_APPLICATION = PROJECT_NAME + '.wsgi.application'
 # https://scm.cch.kcl.ac.uk/hg/ddhldap-django
 # -----------------------------------------------------------------------------
 
-# AUTH_LDAP_REQUIRE_GROUP = 'cn=GROUP_NAME,' + LDAP_BASE_OU
+AUTH_LDAP_REQUIRE_GROUP = 'cn=scw,' + LDAP_BASE_OU
 
+# add users to default groups
+AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = AUTH_LDAP_PROFILE_FLAGS_BY_GROUP.update({
+    "is_editor": ["cn=scw," + LDAP_BASE_OU],
+    "is_moderator": ["cn=scw," + LDAP_BASE_OU]
+})
 
 # -----------------------------------------------------------------------------
 # Static files (CSS, JavaScript, Images)

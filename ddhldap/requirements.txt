@@ -1,0 +1,2 @@
+python-ldap==2.4.33
+django-auth-ldap

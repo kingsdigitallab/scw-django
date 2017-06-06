@@ -28,7 +28,7 @@ PROJECT_NAME = 'scw'
 REPOSITORY = 'https://github.com/kingsdigitallab/{}-django.git'.format(
     PROJECT_NAME)
 # Host names used as deployment targets
-env.hosts = ['{}.kdl.kcl.ac.uk'.format(PROJECT_NAME)]
+env.hosts = ['{}.cch.kcl.ac.uk'.format(PROJECT_NAME)]
 # Absolute filesystem path to project 'webroot'
 env.root_path = '/vol/{}/webroot/'.format(PROJECT_NAME)
 # Absolute filesystem path to project Django root
