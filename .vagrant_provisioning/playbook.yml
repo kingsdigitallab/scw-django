@@ -210,6 +210,7 @@
       - db
       - data
 
+
   handlers:
   - name: postgresql | apply privileges
     become_user: "{{ postgresql.admin_user }}"
@@ -219,6 +220,13 @@
       roles: "{{ postgresql.user }}"
       state: present
       type: database
+    tags:
+      - db
+      - data
+
+  - name: posgresql | create extension
+    command: psql -U {{ postgresql.user }} -d {{ app.name }} -c "CREATE EXTENSION POSTGIS"
+    when: idf.stat.exists
     tags:
       - db
       - data
