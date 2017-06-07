@@ -1,12 +1,38 @@
 from __future__ import unicode_literals
 
-from django.db import models
+from django.contrib.gis.db import models
+
+
+class WorldBorders(models.Model):
+    gid = models.AutoField(primary_key=True)
+    fips = models.CharField(max_length=2, blank=True, null=True)
+    iso2 = models.CharField(max_length=2, blank=True, null=True)
+    iso3 = models.CharField(max_length=3, blank=True, null=True)
+    un = models.SmallIntegerField(blank=True, null=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    area = models.IntegerField(blank=True, null=True)
+    pop2005 = models.DecimalField(max_digits=10, decimal_places=0,
+                                  blank=True, null=True)
+    region = models.SmallIntegerField(blank=True, null=True)
+    subregion = models.SmallIntegerField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    the_geom = models.GeometryField(blank=True, null=True,
+                                    srid=4326)
+
+    class Meta:
+        managed = False
+        db_table = 'tm_world_borders'
+
+    def __unicode__(self):
+        return self.name
 
 
 # Defines a country
 class Country(models.Model):
     name = models.CharField(verbose_name="Country", max_length=128,
                             blank=False)
+    border = models.ForeignKey(WorldBorders, null=True)
 
     def __unicode__(self):
         return self.name
@@ -62,7 +88,7 @@ class MigrationEvent(models.Model):
     free = models.DecimalField(max_digits=20, decimal_places=15,
                                help_text='Sum of the two Freedom House\
                                indices of political rights and civil\
-                               liberties, each ranging from 1 (most free)\
+                               liberties, each ranging from 1(most\
                                to 7 (least free) (AUTOCRACY)', null=True,
                                blank=True)
     genpoliticidemag = models.DecimalField(max_digits=20, decimal_places=15,
