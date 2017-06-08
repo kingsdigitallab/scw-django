@@ -5,6 +5,9 @@
 {% block map %}
 <div id="mapid" style="height:500px;">
 </div>
+<div>
+<h1>{{ country }}</h1>
+</div>
 {% endblock %}
 
 
@@ -23,7 +26,6 @@
 var mymap = L.map('mapid').setView([30, 0], 3);
 L.geoJson(borders).addTo(mymap);
 
-
 var migrationLayer =  new L.migrationLayer({
         arcWidth:1,
         pulseRadius:30,
@@ -33,8 +35,6 @@ var migrationLayer =  new L.migrationLayer({
 })
 
 migrationLayer.addTo(mymap);
-
-
 
 var migrationLayer2 =  new L.migrationLayer({
 	arcWidth:4,

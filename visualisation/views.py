@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-# from visualisation.models import MigrationEvent
+from visualisation.models import Country
 # from haystack.query import SearchQuerySet
 # from haystack.inputs import AutoQuery
 
@@ -14,3 +14,10 @@ def mapview(request):
 
 # Commented out to stop flake8 moanint - no views yet!
 # from django.shortcuts import render
+
+
+def mapCountry(request, id):
+    context = {}
+    country = Country.objects.get(pk=id)
+    context['country'] = country
+    return render(request, 'visualisation/map.html', context)
