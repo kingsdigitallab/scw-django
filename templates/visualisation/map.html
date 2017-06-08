@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles compress require %}
+
+
+{% block map %}
+<div id="mapid" style="height:500px;">
+</div>
+{% endblock %}
+
+
+
+{% block footer_scripts %}
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="{% static 'js/leaflet.migrationLayer.js' %}"></script>
+<script src="{% static 'js/world_borders.geojson' %}"></script>
+<script>
+
+var mymap = L.map('mapid').setView([30, 0], 3);
+L.geoJson(borders).addTo(mymap);
+
+
+var migrationLayer =  new L.migrationLayer({
+        arcWidth:1,
+        pulseRadius:30,
+        pulseBorderWidth:3,
+	map : mymap,
+	data : [{"from":[0,50],"to":[45,4],"labels":["Here","There"],"color":"#234523"}]
+})
+
+migrationLayer.addTo(mymap);
+
+
+
+var migrationLayer2 =  new L.migrationLayer({
+	arcWidth:4,
+	pulseRadius:60,
+	pulseBorderWidth:6,
+        map : mymap,
+        data : [{"from":[0,50],"to":[5,54],"labels":["Here","There"],"color":"#234523"}],
+})
+
+
+migrationLayer2.addTo(mymap)
+
+</script>
+
+{% endblock %}
