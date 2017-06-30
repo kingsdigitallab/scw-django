@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load staticfiles compress require %}
 
-
 {% block map %}
+<div id="country">
+
+</div>
 <div id="mapid" style="height:500px;">
 </div>
+
 <div>
-<h1>{{ country }}</h1>
+
 </div>
 {% endblock %}
 
@@ -24,28 +27,98 @@
 <script>
 
 var mymap = L.map('mapid').setView([30, 0], 3);
-L.geoJson(borders).addTo(mymap);
 
-var migrationLayer =  new L.migrationLayer({
-        arcWidth:1,
-        pulseRadius:30,
-        pulseBorderWidth:3,
-	map : mymap,
-	data : [{"from":[0,50],"to":[45,4],"labels":["Here","There"],"color":"#234523"}]
-})
+// GeoJson style
+gjStyle =
+  {
+        opacity: 0,
+        color: 'blue',
+        stroke: 'blue',
+        fillOpacity: 0
+  };
 
-migrationLayer.addTo(mymap);
+gjHoverStyle =
+  {
+        opacity: 1,
+        stroke: 'red',
+        width: 1,
+        color: 'red',
+  };
 
-var migrationLayer2 =  new L.migrationLayer({
-	arcWidth:4,
-	pulseRadius:60,
-	pulseBorderWidth:6,
-        map : mymap,
-        data : [{"from":[0,50],"to":[5,54],"labels":["Here","There"],"color":"#234523"}],
-})
+var neil
+
+function onEachFeature(feature, layer) {
+    layer.on({
+          mouseover: function(){
+          layer.setStyle(gjHoverStyle)
+        }
+    })
+    layer.on({
+          mouseout: function(){
+          layer.setStyle(gjStyle)
+
+        }
+    })
+    layer.on({
+          click: function(){
+            getCountryDetails(layer.feature.properties['NAME'])
+        }
+    })
+};
+
+var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(mymap);
 
 
-migrationLayer2.addTo(mymap)
+var nations = L.geoJson(borders,{
+  style:gjStyle,
+  onEachFeature:onEachFeature
+}).addTo(mymap);
+
+var migrationEventLayer =  L.migrationLayer({
+	map : mymap, data:[{"color": "#333333", "to": [14.139988372118708, 47.59295768443737], "labels": ["", "Austria 0.43925235"], "from": [43.77224555030643, 33.04800656205751]
+}]})
+
+// INITIALISE AND CLEAR THE MIGRATION LAYER
+
+migrationEventLayer.addTo(mymap)
+migrationEventLayer.hide()
+
+// TO UPDATE THE MIGRATION LAYERS
+
+function updateMigrationLater(country,year){
+  $.ajax("/visualisation/map/" + country.toString() + "/" + year.toString() + "/",
+  {
+    success:function(data){
+      if (data['data'].length ==0 ){
+        migrationEventLayer.hide()
+      }
+      else {
+        migrationEventLayer.setData(data['data'])
+        migrationEventLayer.show()
+      }
+    }
+  }
+  )
+}
+
+function getCountryDetails(name){
+  name = encodeURI(name)
+  $.ajax("/visualisation/country/?name=" + name,
+  {
+    success:function(data){
+      $('#country').html(data)
+      migrationEventLayer.hide()
+    }
+  }
+  )
+};
+
+
+
+
 
 </script>
 
